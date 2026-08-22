@@ -53,4 +53,43 @@ def create_residue_factors(dataset):
         - dataset["solar_radiation"].min()
     )
 )
+
+
+# Calculate the residue factor based on cuticle thickness
+
+    dataset["cuticle_thickness_factor"] = (
+        dataset["cuticle_thickness"] - dataset["cuticle_thickness"].min()
+    ) / (
+        dataset["cuticle_thickness"].max()
+        - dataset["cuticle_thickness"].min()
+    )
+
+# Calculate the residue factor based on surface roughness
+
+    roughness_mapping = {
+        "Low": 0.0,
+        "Medium": 0.5,
+        "High": 1.0
+    }
+
+    dataset["surface_roughness_factor"] = (
+        dataset["surface_roughness"].map(roughness_mapping)
+)
+
+ # Calculate the residue factor based on plant organ
+
+    plant_organ_mapping = {
+        "Leaf": 1.00,
+        "Fruit": 0.85,
+        "Stem": 0.75,
+        "Seed": 0.70,
+        "Grain": 0.70,
+        "Bulb": 0.60,
+        "Tuber": 0.55,
+        "Root": 0.50
+    }
+
+    dataset["plant_organ_factor"] = (
+        dataset["plant_organ_harvested"].map(plant_organ_mapping)
+    )
     return dataset
