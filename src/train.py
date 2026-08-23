@@ -14,8 +14,8 @@ from .features import create_residue_factors
 
 def train_residue_model(dataset):
 
-    # Create the seven residue factors
-    dataset = create_residue_factors(dataset)
+    # Create the residue factors
+    dataset, normalization_values = create_residue_factors(dataset)
 
     # Select model features
     features = [
@@ -61,5 +61,11 @@ def train_residue_model(dataset):
 
     # Save the trained model
     joblib.dump(model, MODEL_PATH)
+
+    # Save normalization values
+    joblib.dump(
+        normalization_values,
+        "normalization_values.joblib"
+    )
 
     return model

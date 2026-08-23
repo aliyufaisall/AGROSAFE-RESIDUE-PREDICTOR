@@ -1,19 +1,63 @@
 def create_residue_factors(dataset):
-#Calculate the residue factors based on the application rate
+
+    normalization_values = {
+        "application_rate": {
+            "min": dataset["application_rate"].min(),
+            "max": dataset["application_rate"].max()
+        },
+
+        "number_of_applications": {
+            "min": dataset["number_of_applications"].min(),
+            "max": dataset["number_of_applications"].max()
+        },
+
+        "soil_half_life": {
+            "min": dataset["soil_half_life"].min(),
+            "max": dataset["soil_half_life"].max()
+        },
+
+        "phi": {
+            "min": dataset["phi"].min(),
+            "max": dataset["phi"].max()
+        },
+
+        "total_rainfall": {
+            "min": dataset["total_rainfall"].min(),
+            "max": dataset["total_rainfall"].max()
+        },
+
+        "average_temperature": {
+            "min": dataset["average_temperature"].min(),
+            "max": dataset["average_temperature"].max()
+        },
+
+        "solar_radiation": {
+            "min": dataset["solar_radiation"].min(),
+            "max": dataset["solar_radiation"].max()
+        },
+
+        "cuticle_thickness": {
+            "min": dataset["cuticle_thickness"].min(),
+            "max": dataset["cuticle_thickness"].max()
+        }
+    }
+
+
+    #Calculate the residue factors based on the application rate
     dataset["application_rate_factor"] = (
-    dataset["application_rate"] - dataset["application_rate"].min()
-) / (
-    dataset["application_rate"].max()
-    - dataset["application_rate"].min()
-)
-#Calculate the residue factors based on the number of applications
+        dataset["application_rate"] - dataset["application_rate"].min()
+    ) / (
+        dataset["application_rate"].max()
+        - dataset["application_rate"].min()
+    )
+    #Calculate the residue factors based on the number of applications
     dataset["number_of_applications_factor"] = (
-    dataset["number_of_applications"]
-    - dataset["number_of_applications"].min()
-) / (
-    dataset["number_of_applications"].max()
-    - dataset["number_of_applications"].min()
-)
+        dataset["number_of_applications"]
+        - dataset["number_of_applications"].min()
+    ) / (
+        dataset["number_of_applications"].max()
+        - dataset["number_of_applications"].min()
+    )
 #Calculate the residue factors based on the soil half-life
     dataset["chemical_half_life_factor"] = (
     dataset["soil_half_life"] - dataset["soil_half_life"].min()
@@ -92,4 +136,4 @@ def create_residue_factors(dataset):
     dataset["plant_organ_factor"] = (
         dataset["plant_organ_harvested"].map(plant_organ_mapping)
     )
-    return dataset
+    return dataset, normalization_values
